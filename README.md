@@ -1,7 +1,5 @@
 # LabHub
 
-# LabHUb
-
 ## Descrição
 O **LabHUb** é um sistema que facilita o gerenciamento e monitoramento do hardware disponível em hospitais, tendo um controle eficiente do inventário e uso dos recursos.
 
