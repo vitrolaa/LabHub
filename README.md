@@ -17,3 +17,6 @@ O **LabHUb** é um sistema que facilita o gerenciamento e monitoramento do hardw
 ## Diagrama Logico
 ![image](https://github.com/user-attachments/assets/f1c09e38-e8f2-42ad-85c0-2571cac8172d)
 
+## Diagrama Conceitual
+![image](https://github.com/user-attachments/assets/c3f20a95-a024-4956-a69c-683bf2147fbe)
+
