@@ -12,3 +12,8 @@ O **LabHUb** é um sistema que facilita o gerenciamento e monitoramento do hardw
 ## Tecnologias
 - Linguagem de programação: Java
 - Banco de Dados: MySQL
+
+
+## Diagrama Logico
+![image](https://github.com/user-attachments/assets/f1c09e38-e8f2-42ad-85c0-2571cac8172d)
+
