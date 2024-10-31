@@ -196,7 +196,3 @@ JOIN
     manutencao m ON p.id_manutencao = m.id_manutencao;
 
 
-
-SELECT
-e.id_equipamento
-
