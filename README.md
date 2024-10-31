@@ -138,7 +138,7 @@ INSERT INTO laboratorio (numeroDaSala, id_equipamento) VALUES
 SELECT * FROM usuario;
 SELECT * FROM equipamento;
 SELECT * FROM manutencao;
-SELECT * FROM pecas;
+SELECT * FROM pecas;	
 SELECT * FROM tecnico;
 SELECT * FROM laboratorio;
 
@@ -158,6 +158,43 @@ FROM
     usuario u
 JOIN
     equipamento e ON u.id_equipamento = e.id_equipamento;
+
+-- Consultar o modelo do equipamento que está na sala
+SELECT
+l.id_laboratorio,
+l.numeroDaSala AS N_Sala,
+e.modelo AS Modelo
+FROM
+laboratorio l
+JOIN
+equipamento e ON l.id_equipamento = e.id_equipamento;
+
+-- Consultar o pc que vai receber a manutencao e o tecnico q ira realizala
+SELECT
+    m.id_manutencao,
+    t.nomeTecnico AS Nome,
+    m.dataManutencao AS Data_Da_Manutencao,
+    m.tipoManutencao AS Tipo_De_Manutencao,
+    e.modelo AS Modelo
+FROM
+    manutencao m
+JOIN
+    tecnico t ON m.id_tecnico = t.id_tecnico
+JOIN
+    equipamento e ON m.id_equipamento = e.id_equipamento;
+
+-- Consulta pecas e manutencao
+SELECT
+    p.id_pecas,
+    m.tipoManutencao,
+    p.nomePecas AS Nome_da_Peça,
+    p.quantidadePecas,
+    p.tipoPecas
+FROM
+    pecas p
+JOIN
+    manutencao m ON p.id_manutencao = m.id_manutencao;
+
 
 
 SELECT
