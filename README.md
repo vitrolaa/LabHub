@@ -134,6 +134,15 @@ INSERT INTO laboratorio (numeroDaSala, id_equipamento) VALUES
 ('Sala 104', 4),
 ('Sala 105', 5);
 
+create table hLogin(
+id_login int auto_increment primary key,
+login varchar(30) not null unique,
+senha varchar(30) not null
+);
+
+insert into hlogin(login, senha) values
+('admin', 'admin');
+
 
 SELECT * FROM usuario;
 SELECT * FROM equipamento;
@@ -160,19 +169,21 @@ JOIN
     equipamento e ON u.id_equipamento = e.id_equipamento;
 
 -- Consultar o modelo do equipamento que está na sala
-SELECT
-l.id_laboratorio,
-l.numeroDaSala AS N_Sala,
-e.modelo AS Modelo
-FROM
-laboratorio l
-JOIN
-equipamento e ON l.id_equipamento = e.id_equipamento;
+	SELECT
+	l.id_laboratorio,
+	l.numeroDaSala AS N_Sala,
+	e.modelo AS Modelo,
+	e.numeroSerie AS N°_Serie,
+	e.statusEquipamento AS Status_Equipamento
+	FROM
+	laboratorio l
+	JOIN
+	equipamento e ON l.id_equipamento = e.id_equipamento;
 
 -- Consultar o pc que vai receber a manutencao e o tecnico q ira realizala
 SELECT
     m.id_manutencao,
-    t.nomeTecnico AS Nome,
+    t.nomeTecnico AS Nome_Tecnico,
     m.dataManutencao AS Data_Da_Manutencao,
     m.tipoManutencao AS Tipo_De_Manutencao,
     e.modelo AS Modelo
@@ -194,5 +205,7 @@ FROM
     pecas p
 JOIN
     manutencao m ON p.id_manutencao = m.id_manutencao;
+
+
 
 
