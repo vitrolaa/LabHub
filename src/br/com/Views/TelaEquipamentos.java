@@ -1,4 +1,3 @@
-
 package br.com.Views;
 
 import br.com.DAO.ClienteDAO;
@@ -16,37 +15,62 @@ public class TelaEquipamentos extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
 
-    
     public TelaEquipamentos() {
         initComponents();
         conexao = ConexaoDAO.conector();
     }
-    
-    public void pesquisarEquipamento(){
+
+    public void pesquisarEquipamentoNormal() {
         String sql = "select * from equipamento where id_equipamento = ?";
-        
-        try{
+
+        try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtIdEquipamento.getText());
             rs = pst.executeQuery();
+
+        if (rs.next()) {
+            txtModelo.setText(rs.getString(2));
+            txtFabricante.setText(rs.getString(3));
+            txtNSerie.setText(rs.getString(4));
+            txtStatus.setText(rs.getString(5));
+            txtGarantia.setText(rs.getString(6));
             
-            tbEquipamento.setModel(DbUtils.resultSetToTableModel(rs));
-                     
-        }catch(Exception e){
+        } else {
+                JOptionPane.showMessageDialog(null, "Usuario não cadastrado!");
+            }
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, " Metodo pesquisar " + e);
         }
     }
     
-    public void setarCampos(){
+    
+    
+    public void pesquisarEquipamento() {
+        String sql = "select * from equipamento where id_equipamento = ?";
+
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtIdPesquisar.getText());
+            rs = pst.executeQuery();
+
+            tbEquipamento.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, " Metodo pesquisar " + e);
+        }
+    }
+
+    public void setarCampos() {
         int setar = tbEquipamento.getSelectedRow();
         txtModelo.setText(tbEquipamento.getModel().getValueAt(setar, 1).toString());
         txtFabricante.setText(tbEquipamento.getModel().getValueAt(setar, 2).toString());
         txtNSerie.setText(tbEquipamento.getModel().getValueAt(setar, 3).toString());
         txtStatus.setText(tbEquipamento.getModel().getValueAt(setar, 4).toString());
         txtGarantia.setText(tbEquipamento.getModel().getValueAt(setar, 5).toString());
-    }   
-    
-    public void limpar(){
+    }
+
+    public void limpar() {
         txtFabricante.setText(null);
         txtGarantia.setText(null);
         txtIdEquipamento.setText(null);
@@ -56,7 +80,6 @@ public class TelaEquipamentos extends javax.swing.JFrame {
         txtFabricante.setText(null);
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -70,20 +93,21 @@ public class TelaEquipamentos extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtIdEquipamento = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
         txtFabricante = new javax.swing.JTextField();
         txtNSerie = new javax.swing.JTextField();
         txtStatus = new javax.swing.JTextField();
         txtGarantia = new javax.swing.JTextField();
-        btnPesquisar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
         btnDeletar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbEquipamento = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtIdPesquisar = new javax.swing.JTextField();
+        txtIdEquipamento = new javax.swing.JTextField();
+        btnPesquisarNormal = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,19 +135,6 @@ public class TelaEquipamentos extends javax.swing.JFrame {
         jLabel5.setText("Status");
 
         jLabel6.setText("Garantia");
-
-        txtIdEquipamento.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtIdEquipamentoKeyReleased(evt);
-            }
-        });
-
-        btnPesquisar.setText("pesquisar");
-        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisarActionPerformed(evt);
-            }
-        });
 
         btnEditar.setText("editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -164,11 +175,31 @@ public class TelaEquipamentos extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tbEquipamento);
 
-        jLabel7.setText("Digite o id que voce quer pesquisar");
+        jLabel7.setText("Digite o id que voce quer pesquisar na tabela");
 
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtIdPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField1KeyReleased(evt);
+                txtIdPesquisarKeyReleased(evt);
+            }
+        });
+
+        txtIdEquipamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdEquipamentoActionPerformed(evt);
+            }
+        });
+
+        btnPesquisarNormal.setText("Pesquisar");
+        btnPesquisarNormal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarNormalActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
             }
         });
 
@@ -180,17 +211,13 @@ public class TelaEquipamentos extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnPesquisar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEditar)
                         .addGap(18, 18, 18)
                         .addComponent(btnAdicionar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDeletar))
+                        .addComponent(btnDeletar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -208,17 +235,26 @@ public class TelaEquipamentos extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(txtIdEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtIdEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(btnPesquisarNormal))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtIdPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(txtIdEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtIdEquipamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPesquisarNormal)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -241,25 +277,21 @@ public class TelaEquipamentos extends javax.swing.JFrame {
                     .addComponent(txtGarantia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPesquisar)
                     .addComponent(btnEditar)
                     .addComponent(btnAdicionar)
-                    .addComponent(btnDeletar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addComponent(btnDeletar)
+                    .addComponent(btnLimpar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtIdPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(37, 37, 37))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        pesquisarEquipamento();
-    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         String id_equipamento = txtIdEquipamento.getText();
@@ -268,7 +300,7 @@ public class TelaEquipamentos extends javax.swing.JFrame {
         String numeroSerie = txtNSerie.getText();
         String statusEquipamento = txtStatus.getText();
         String garantia = txtGarantia.getText();
-        
+
         EquipamentoDTO objDTO = new EquipamentoDTO();
         objDTO.setId_equipamento(Integer.parseInt(id_equipamento));
         objDTO.setModelo(modelo);
@@ -276,7 +308,7 @@ public class TelaEquipamentos extends javax.swing.JFrame {
         objDTO.setNumeroSerie(numeroSerie);
         objDTO.setStatusEquipamento(statusEquipamento);
         objDTO.setGarantia(garantia);
-        
+
         ClienteDAO objEquipamentoDAO = new ClienteDAO();
         objEquipamentoDAO.editarEquipamento(objDTO);
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -287,7 +319,7 @@ public class TelaEquipamentos extends javax.swing.JFrame {
         String numeroSerie = txtNSerie.getText();
         String statusEquipamento = txtStatus.getText();
         String garantia = txtGarantia.getText();
-        
+
         EquipamentoDTO objDTO = new EquipamentoDTO();
         objDTO.id_equipamento = Integer.parseInt(txtIdEquipamento.getText());
         objDTO.setModelo(modelo);
@@ -295,10 +327,10 @@ public class TelaEquipamentos extends javax.swing.JFrame {
         objDTO.setNumeroSerie(numeroSerie);
         objDTO.setStatusEquipamento(statusEquipamento);
         objDTO.setGarantia(garantia);
-        
+
         ClienteDAO objEquipamentoDAO = new ClienteDAO();
         boolean inserir = objEquipamentoDAO.inserirEquipamento(objDTO);
-        
+
         if (inserir) {
             JOptionPane.showMessageDialog(null, "O Equipamento foi inserido com sucesso ");
             limpar();
@@ -309,25 +341,33 @@ public class TelaEquipamentos extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         String id_equipamento = txtIdEquipamento.getText();
-        
+
         EquipamentoDTO objDTO = new EquipamentoDTO();
         objDTO.setId_equipamento(Integer.parseInt(id_equipamento));
-        
+
         ClienteDAO objEquipamentoDAO = new ClienteDAO();
         objEquipamentoDAO.deletarEquipamento(objDTO);
     }//GEN-LAST:event_btnDeletarActionPerformed
 
-    private void txtIdEquipamentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdEquipamentoKeyReleased
- pesquisarEquipamento();
-    }//GEN-LAST:event_txtIdEquipamentoKeyReleased
-
-    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        
-    }//GEN-LAST:event_jTextField1KeyReleased
+    private void txtIdPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdPesquisarKeyReleased
+        pesquisarEquipamento();
+    }//GEN-LAST:event_txtIdPesquisarKeyReleased
 
     private void tbEquipamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEquipamentoMouseClicked
-       setarCampos();
+
     }//GEN-LAST:event_tbEquipamentoMouseClicked
+
+    private void txtIdEquipamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdEquipamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdEquipamentoActionPerformed
+
+    private void btnPesquisarNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNormalActionPerformed
+        pesquisarEquipamentoNormal();
+    }//GEN-LAST:event_btnPesquisarNormalActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limpar();
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,7 +408,8 @@ public class TelaEquipamentos extends javax.swing.JFrame {
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnPesquisarNormal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -380,11 +421,11 @@ public class TelaEquipamentos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tbEquipamento;
     private javax.swing.JTextField txtFabricante;
     private javax.swing.JTextField txtGarantia;
     private javax.swing.JTextField txtIdEquipamento;
+    private javax.swing.JTextField txtIdPesquisar;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNSerie;
     private javax.swing.JTextField txtStatus;
