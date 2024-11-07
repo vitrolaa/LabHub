@@ -133,44 +133,51 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEquipamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnPecas)
-                        .addComponent(btnTecnicos)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnTecnicos)))
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaboratorioActionPerformed
         TelaLaboratorio tLabolatorio = new TelaLaboratorio();
         tLabolatorio.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnLaboratorioActionPerformed
 
     private void btnManutencaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManutencaoActionPerformed
         TelaManutencao tManutencao = new TelaManutencao();
         tManutencao.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnManutencaoActionPerformed
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         TelaUsuario tUsuario = new TelaUsuario();
         tUsuario.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     private void btnPecasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPecasActionPerformed
         TelaPecas tPecas = new TelaPecas();
         tPecas.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPecasActionPerformed
 
     private void btnEquipamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipamentosActionPerformed
         TelaEquipamentos tEquipamentos = new TelaEquipamentos();
         tEquipamentos.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnEquipamentosActionPerformed
 
     private void btnTecnicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTecnicosActionPerformed
         TelaTecnico tTecnicos = new TelaTecnico();
         tTecnicos.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnTecnicosActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
