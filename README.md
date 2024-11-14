@@ -26,7 +26,7 @@ create database LabHub;
 
 use LabHub;
 
--- 1. Tabela `usuarios`
+-- 1. Tabela usuarios, Vitor Brito
 CREATE TABLE usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -35,13 +35,13 @@ CREATE TABLE usuario (
     perfil ENUM('tecnico', 'administrador', 'professor', 'estagiario') NOT NULL
 );
 
--- 2. Tabela `laboratorios`
+-- 2. Tabela laboratorios, Theo Viganó
 CREATE TABLE laboratorios (
     id_laboratorio INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL
 );
 
--- 3. Tabela `maquinas`
+-- 3. Tabela maquinas, Heitor Nunes, Vitor Brito
 CREATE TABLE maquinas (
     id_maquina INT AUTO_INCREMENT PRIMARY KEY,
     id_laboratorio INT,
@@ -55,7 +55,7 @@ CREATE TABLE maquinas (
     FOREIGN KEY (id_laboratorio) REFERENCES laboratorios(id_laboratorio)
 );
 
--- 4. Tabela `manutencoes`
+-- 4. Tabela manutencoes, Heitor Nunes
 CREATE TABLE manutencoes (
     id_manutencao INT AUTO_INCREMENT PRIMARY KEY,
     id_maquina INT,
@@ -66,8 +66,8 @@ CREATE TABLE manutencoes (
     FOREIGN KEY (id_maquina) REFERENCES maquinas(id_maquina)
 );
 
--- 5. Tabela `pecas`
-CREATE TABLE pecas (
+-- 5. Tabela pecas, Theo Viganó
+CREATE TABLE pecas ( 
     id_peca INT AUTO_INCREMENT PRIMARY KEY,
     nome_peca VARCHAR(100) NOT NULL,
     quantidade_estoque INT DEFAULT 0,
@@ -75,17 +75,17 @@ CREATE TABLE pecas (
     imagem BLOB
 );
 
--- 6. Tabela `pecas_manutencao`
+-- 6. Tabela pecas_manutencao, Heitor Nunes, Theo Viganó, Vitor Brito
 CREATE TABLE pecas_manutencao (
     id_peca_manutencao INT AUTO_INCREMENT PRIMARY KEY,
     id_manutencao INT,
     id_peca INT,
     quantidade_utilizada INT NOT NULL,
     FOREIGN KEY (id_manutencao) REFERENCES manutencoes(id_manutencao),
-    FOREIGN KEY (id_peca) REFERENCES pecas(id_peca)
+    FOREIGN KEY (id_peca) REFERENCES pecas (id_peca)
 );
 
--- 7. Tabela `tecnico`
+-- 7. Tabela tecnico, Vitor Brito
 CREATE TABLE tecnicos (
     id_tecnico INT AUTO_INCREMENT PRIMARY KEY,     -- Identificador único do técnico
     nome VARCHAR(100) NOT NULL,                    -- Nome do técnico
@@ -96,7 +96,7 @@ CREATE TABLE tecnicos (
     FOREIGN KEY (id_laboratorio) REFERENCES laboratorios(id_laboratorio) -- Relaciona ao laboratório
 );
 
--- 8. Tabela `login`
+-- 8. Tabela login, Vitor Brito
 CREATE TABLE login (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,     -- Identificador único do usuário
     email VARCHAR(100) NOT NULL UNIQUE,            -- E-mail único do usuário (relacionado com a tabela tecnicos)
@@ -106,51 +106,51 @@ CREATE TABLE login (
     CONSTRAINT fk_email FOREIGN KEY (email) REFERENCES tecnicos(email) -- Relaciona com o e-mail da tabela 'tecnicos'
 );
 
--- Inserindo dados na tabela `usuarios`
+-- Inserindo dados na tabela usuarios
 INSERT INTO usuario (nome, email, senha, perfil) VALUES
 ('Carlos Silva', 'carlos@lab.com', 'tec', 'tecnico'),
 ('Ana Oliveira', 'ana@lab.com', 'adm', 'administrador'),
 ('João Santos', 'joao@lab.com', 'prof', 'professor');
 
--- Inserindo dados na tabela `laboratorios`
+-- Inserindo dados na tabela laboratorios
 INSERT INTO laboratorios (nome) VALUES
 ('LabinA'),
 ('LabinB'),
 ('LabinC'),
 ('LabinD');
 
--- Inserindo dados na tabela `maquinas`
+-- Inserindo dados na tabela maquinas
 INSERT INTO maquinas (id_laboratorio, nome, processador, memoria_RAM, armazenamento, numero_serie, data_aquisicao, status) VALUES
 (1, 'Máquina A', 'Intel Core i5', '8GB', '500GB SSD', 'SN001', '2023-01-10', 'funcionando'),
 (2, 'Máquina B', 'Intel Core i7', '16GB', '1TB HDD', 'SN002', '2022-11-20', 'em_manutencao'),
 (3, 'Máquina C', 'AMD Ryzen 5', '8GB', '256GB SSD', 'SN003', '2023-05-15', 'fora_de_uso');
 
--- Inserindo dados na tabela `manutencoes`
+-- Inserindo dados na tabela manutencoes
 INSERT INTO manutencoes (id_maquina, data_manutencao, diagnostico, solucao, tecnico_responsavel) VALUES
 (1, '2024-01-15', 'Reparação do sistema', 'Reinstalação do SO', 'Carlos Silva'),
 (2, '2024-02-20', 'Troca de fonte', 'Fonte substituída', 'Ana Oliveira'),
 (3, '2024-03-05', 'Aquecimento excessivo', 'Limpeza interna', 'João Santos');
 
--- Inserindo dados na tabela `pecas`
+-- Inserindo dados na tabela pecas
 INSERT INTO pecas (nome_peca, quantidade_estoque, descricao, imagem) VALUES
 ('Fonte de Alimentação 500W', 10, 'Fonte para desktops com 500W', NULL),
 ('Memória RAM 8GB', 20, 'DDR4 para notebooks e desktops', NULL),
 ('Disco SSD 256GB', 15, 'SSD SATA para alto desempenho', NULL);
 
--- Inserindo dados na tabela `pecas_manutencao`
+-- Inserindo dados na tabela pecas_manutencao
 INSERT INTO pecas_manutencao (id_manutencao, id_peca, quantidade_utilizada) VALUES
 (1, 1, 1),
 (2, 2, 2),
 (3, 3, 1);
 
--- Inserindo dados na tabela `tecnico`
+-- Inserindo dados na tabela tecnico
 INSERT INTO tecnicos (nome, email, id_laboratorio, telefone, data_admissao) VALUES
 ('Carlos Silva', 'carlos@lab.com', 1, '1234-5678', '2024-01-10'),
 ('Ana Oliveira', 'ana@lab.com', 2, '2345-6789', '2023-07-15'),
 ('João Santos', 'joao@lab.com', 3, '3456-7890', '2023-12-01'),
 ('Maria Pereira', 'maria@lab.com', 1, '4567-8901', '2024-03-01');
 
--- Inserindo dados na tabela `login`
+-- Inserindo dados na tabela login
 INSERT INTO login (email, senha, ultimo_login, status) VALUES
 ('carlos@lab.com', 'senha123', '2024-11-09 08:00:00', 'ativo'),
 ('ana@lab.com', 'senha456', '2024-11-08 09:30:00', 'ativo'),
@@ -182,9 +182,6 @@ JOIN manutencoes ma ON pm.id_manutencao = ma.id_manutencao
 JOIN maquinas m ON ma.id_maquina = m.id_maquina
 JOIN laboratorios l ON m.id_laboratorio = l.id_laboratorio
 ORDER BY ma.data_manutencao DESC;
-
-
-
 
 
 
