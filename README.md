@@ -89,6 +89,7 @@ CREATE TABLE pecas_manutencao (
 CREATE TABLE tecnicos (
     id_tecnico INT AUTO_INCREMENT PRIMARY KEY,     -- Identificador único do técnico
     nome VARCHAR(100) NOT NULL,                    -- Nome do técnico
+    email VARCHAR(100) NOT NULL UNIQUE,            -- E-mail único do técnico
     id_laboratorio INT,                            -- Laboratório ao qual o técnico está alocado (caso haja)
     telefone VARCHAR(20),                          -- Telefone do técnico
     data_admissao DATE,                            -- Data de admissão do técnico
@@ -144,27 +145,17 @@ INSERT INTO pecas_manutencao (id_manutencao, id_peca, quantidade_utilizada) VALU
 
 -- Inserindo dados na tabela `tecnico`
 INSERT INTO tecnicos (nome, email, id_laboratorio, telefone, data_admissao) VALUES
-('Carlos Silva', 1, '1234-5678', '2024-01-10'),
-('Ana Oliveira', 2, '2345-6789', '2023-07-15'),
-('João Santos',, 3, '3456-7890', '2023-12-01'),
-('Maria Pereira', 1, '4567-8901', '2024-03-01');
-
-INSERT INTO tecnicos (nome, email, id_laboratorio, telefone, data_admissao) VALUES
-('admin', 'admin', 2, '3456-7854', '2023-12-05');
+('Carlos Silva', 'carlos@lab.com', 1, '1234-5678', '2024-01-10'),
+('Ana Oliveira', 'ana@lab.com', 2, '2345-6789', '2023-07-15'),
+('João Santos', 'joao@lab.com', 3, '3456-7890', '2023-12-01'),
+('Maria Pereira', 'maria@lab.com', 1, '4567-8901', '2024-03-01');
 
 -- Inserindo dados na tabela `login`
 INSERT INTO login (email, senha, ultimo_login, status) VALUES
 ('carlos@lab.com', 'senha123', '2024-11-09 08:00:00', 'ativo'),
 ('ana@lab.com', 'senha456', '2024-11-08 09:30:00', 'ativo'),
 ('joao@lab.com', 'senha789', '2024-11-07 14:45:00', 'ativo'),
-('maria@lab.com', 'senha101', NULL, 'ativo'),
-('admin', 'admin', '2024-12-07 16:45:00', 'ativo');
-
-INSERT INTO login (email, senha, ultimo_login, status) VALUES
-('admin', 'admin', null, 'ativo');
-
-select * from tecnicos;
-select * from laboratorios;
+('maria@lab.com', 'senha101', NULL, 'ativo');
 
 -- Consulta SQL: Relatórios e Detalhes do Sistema
 SELECT 
@@ -191,3 +182,15 @@ JOIN manutencoes ma ON pm.id_manutencao = ma.id_manutencao
 JOIN maquinas m ON ma.id_maquina = m.id_maquina
 JOIN laboratorios l ON m.id_laboratorio = l.id_laboratorio
 ORDER BY ma.data_manutencao DESC;
+
+
+
+
+
+
+
+
+
+
+
+
